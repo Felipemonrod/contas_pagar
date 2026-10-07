@@ -1,0 +1,13 @@
+$kind: http-request
+url: "{{baseUrl}}/contas-pagar/{{contaPagarId}}/simulacao?data=2026-10-03"
+method: GET
+queryParams:
+  data: 2026-10-03
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('desconto aplicado', () => {
+        pm.expect(Number(pm.response.json().descontoAplicado)).to.eql(50);
+      });
+    language: text/javascript
+order: 2000

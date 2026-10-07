@@ -1,0 +1,18 @@
+$kind: http-request
+url: "{{baseUrl}}/pessoas"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "nome": "Cliente Puro SA",
+      "documento": "22.222.222/0001-22",
+      "papeis": ["CLIENTE"]
+    }
+scripts:
+  - type: afterResponse
+    code: pm.collectionVariables.set('clienteId', pm.response.json().id);
+    language: text/javascript
+order: 2000

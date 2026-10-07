@@ -1,0 +1,7 @@
+$kind: http-request
+url: "{{baseUrl}}/relatorios/por-categoria?de=2026-09-01&ate=2026-12-31"
+method: GET
+queryParams:
+  de: 2026-09-01
+  ate: 2026-12-31
+order: 2000

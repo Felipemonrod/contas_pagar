@@ -1,0 +1,27 @@
+$kind: http-request
+url: "{{baseUrl}}/contas-receber"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "numeroTitulo": "NF-123456",
+      "pessoaId": {{pessoaId}},
+      "tipoTitulo": "NOTA_PROMISSORIA",
+      "valor": 800.00,
+      "emissao": "2026-09-01",
+      "vencimento": "2026-10-20",
+      "desconto": 40.00,
+      "validadeDesconto": "2026-10-15",
+      "acrescimoDia": 3.00,
+      "rateios": [
+        { "planoContaId": 7, "valor": 800.00 }
+      ]
+    }
+scripts:
+  - type: afterResponse
+    code: pm.collectionVariables.set('contaReceberId', pm.response.json().id);
+    language: text/javascript
+order: 1000

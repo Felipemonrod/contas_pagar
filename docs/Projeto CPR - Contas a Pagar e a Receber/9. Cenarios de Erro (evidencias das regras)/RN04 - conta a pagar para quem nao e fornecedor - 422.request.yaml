@@ -1,0 +1,26 @@
+$kind: http-request
+name: RN04 - conta a pagar para quem nao e fornecedor -> 422
+url: "{{baseUrl}}/contas-pagar"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "numeroTitulo": "ERR-004",
+      "pessoaId": {{clienteId}},
+      "tipoTitulo": "DUPLICATA",
+      "valor": 500.00,
+      "emissao": "2026-09-01",
+      "vencimento": "2026-10-15"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('422', () => pm.response.to.have.status(422));
+      pm.test('a mensagem explica a regra', () => {
+        pm.expect(pm.response.json().mensagem).to.include('fornecedor');
+      });
+    language: text/javascript
+order: 3500

@@ -23,7 +23,7 @@ A escolha foi por **usar os padrões que o problema pede**, e não por aplicar o
 Demonstração no vídeo: a mesma conta simulada em três datas devolve desconto, nada, ou juros, sem nenhum `if` no service.
 
 ### Service Layer — regras de negócio isoladas
-**Onde:** `ContaPagarService`, `PessoaService`
+**Onde:** `ContaPagarService`, `ContaReceberService`, `PessoaService`, `PlanoContaService`, `DespesaService`
 
 O controller só trata HTTP, o repositório só fala com o banco, e toda a regra fica no meio. É o que permite que a mesma regra seja usada por uma API REST hoje e por um microsserviço na etapa 2.
 
@@ -33,12 +33,12 @@ O controller só trata HTTP, o repositório só fala com o banco, e toda a regra
 Um único método esconde do chamador: buscar o título, validar situação, buscar a forma de pagamento, acionar a calculadora de encargos, criar o registro de pagamento e atualizar a situação.
 
 ### DTO (Data Transfer Object)
-**Onde:** `contapagar/dto/`, `PessoaDtos`
+**Onde:** `contapagar/dto/`, `contareceber/dto/`, `PessoaDtos`, `PlanoContaDtos`, `DespesaDtos`, `RelatorioDtos`
 
 Separa o formato da API do formato do banco. Sem isso, mudar uma coluna quebraria o contrato com quem consome a API. Também é onde ficam as validações de entrada.
 
 ### Mapper (variação do Adapter)
-**Onde:** `ContaPagarMapper`, `PessoaMapper`
+**Onde:** `ContaPagarMapper`, `ContaReceberMapper`, `PessoaMapper`
 
 Converte entidade em DTO num lugar só. Detalhe importante: a conversão acontece **dentro da transação**, no service — foi o que resolveu o `LazyInitializationException` que apareceu nos testes.
 
@@ -86,3 +86,4 @@ Registrar o que **não** foi usado é tão importante quanto o que foi — mostr
 - **Situação como dado explícito**, e não derivada das datas como no livro original.
 - **Quitação em tabela própria** (1:N), permitindo pagamento parcial — o livro tinha um único campo de data.
 - **Exclusão lógica** de pessoa (`ativo = false`), porque o histórico de títulos depende da pessoa continuar existindo.
+- **Despesa com vínculo opcional ao título** (1:1), para representar a previsão que ainda não se realizou.

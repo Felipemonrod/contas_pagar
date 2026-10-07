@@ -1,0 +1,6 @@
+$kind: http-request
+url: "{{baseUrl}}/despesas?previstas=true"
+method: GET
+queryParams:
+  previstas: "true"
+order: 3000

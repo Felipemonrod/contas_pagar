@@ -1,0 +1,23 @@
+$kind: http-request
+name: RN12 - rateio nao fecha com o valor -> 422
+url: "{{baseUrl}}/contas-pagar"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "numeroTitulo": "ERR-002",
+      "pessoaId": {{pessoaId}},
+      "tipoTitulo": "DUPLICATA",
+      "valor": 100.00,
+      "emissao": "2026-09-01",
+      "vencimento": "2026-10-01",
+      "rateios": [{ "planoContaId": 10, "valor": 70.00 }]
+    }
+scripts:
+  - type: afterResponse
+    code: pm.test('422', () => pm.response.to.have.status(422));
+    language: text/javascript
+order: 2000

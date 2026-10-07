@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{baseUrl}}/plano-contas/analiticas"
+method: GET
+order: 2000

@@ -62,7 +62,18 @@ Na primeira execução, o Flyway cria todas as tabelas e carrega os dados de dom
 http://localhost:8080/swagger-ui.html
 ```
 
-Todos os endpoints podem ser testados por essa tela, sem precisar de Postman.
+Todos os endpoints podem ser testados por essa tela.
+
+### Testando pelo Postman
+
+Importe o arquivo [docs/Projeto-CPR.postman_collection.json](docs/Projeto-CPR.postman_collection.json) no Postman:
+
+1. **Import** → selecione o arquivo
+2. Abra a coleção e use o **Run collection** para executar as 32 requisições em sequência
+
+As requisições estão na ordem correta de execução e guardam sozinhas os identificadores gerados (pessoa, título, despesa), então o fluxo completo roda sem edição manual. Cada requisição verifica o código de resposta esperado, e a pasta *Cenários de Erro* reúne as regras de negócio que devem ser recusadas.
+
+> Execute sobre uma base recém-criada: `docker compose down -v && docker compose up -d`
 
 ---
 
@@ -185,7 +196,7 @@ A organização é **por domínio, e não por camada**. Cada pasta de primeiro n
 - [docs/PADROES-DE-PROJETO.md](docs/PADROES-DE-PROJETO.md) — padrões utilizados, com justificativa
 - [docs/DOCUMENTACAO.md](docs/DOCUMENTACAO.md) — descrição do problema, regras de negócio, requisitos e arquitetura
 - [docs/DIAGRAMAS.md](docs/DIAGRAMAS.md) — os seis diagramas exigidos: classes, componentes, pacotes, casos de uso, sequência e DER
-- [docs/Projeto-CPR.postman_collection.json](docs/Projeto-CPR.postman_collection.json) — coleção do Postman com o fluxo completo e os cenários de erro
+- [docs/Projeto-CPR.postman_collection.json](docs/Projeto-CPR.postman_collection.json) — coleção do Postman: 32 requisições em ordem de execução, com verificação automática de cada resposta
 - [docs/evidencias/](docs/evidencias/) — bateria de validação da API: 44 verificações cobrindo todas as regras de negócio
 - `testar.bat` — bateria de 38 verificações pelo prompt do Windows, usando apenas `curl` (requer a aplicação no ar)
 
