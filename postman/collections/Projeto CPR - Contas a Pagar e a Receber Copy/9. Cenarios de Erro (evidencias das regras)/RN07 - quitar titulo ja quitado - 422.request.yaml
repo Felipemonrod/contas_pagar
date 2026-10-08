@@ -1,0 +1,18 @@
+$kind: http-request
+name: RN07 - quitar titulo ja quitado -> 422
+url: "{{baseUrl}}/contas-pagar/{{contaPagarId}}/pagamento"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "dataPagamento": "2026-10-03",
+      "formaPagamento": "PIX"
+    }
+scripts:
+  - type: afterResponse
+    code: pm.test('422', () => pm.response.to.have.status(422));
+    language: text/javascript
+order: 5000

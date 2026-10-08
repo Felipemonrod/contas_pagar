@@ -1,7 +1,14 @@
 # Use this workspace to collaborate
 workspace:
-  id: 1e851282-6f4d-4d2f-b4cf-c2462acbdc11
+  id: a694179e-1e89-4641-9ecc-05989bdf9493
 
 localResources:
   collections:
     - ../docs/Projeto CPR - Contas a Pagar e a Receber
+    - ../docs/Projeto CPR - Contas a Pagar e a Receber-1
+
+# Each entry here maps a local resource to one or more corresponding objects in Postman Cloud
+
+cloudResources:
+  collections:
+    ../postman/collections/Projeto CPR - Contas a Pagar e a Receber Copy: 5993cf10-cb90-4460-8ac3-cee88c67af8d

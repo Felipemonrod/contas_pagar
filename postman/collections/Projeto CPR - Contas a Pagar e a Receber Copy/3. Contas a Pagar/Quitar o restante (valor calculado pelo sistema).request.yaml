@@ -1,0 +1,28 @@
+$kind: http-request
+url: "{{baseUrl}}/contas-pagar/{{contaPagarId}}/pagamento"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "dataPagamento": "2026-10-03",
+      "formaPagamento": "BOLETO"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('situacao vira PAGA', () => {
+        pm.expect(pm.response.json().situacao).to.eql('PAGA');
+      });
+      pm.test('saldo zerado', () => {
+        pm.expect(Number(pm.response.json().saldoDevedor)).to.eql(0);
+      });
+      pm.test('desconto concedido uma unica vez (RN10)', () => {
+        const total = pm.response.json().pagamentos
+          .reduce((s, p) => s + Number(p.descontoAplicado), 0);
+        pm.expect(total).to.eql(50);
+      });
+    language: text/javascript
+order: 6000

@@ -1,0 +1,21 @@
+$kind: http-request
+url: "{{baseUrl}}/contas-pagar/{{contaPagarId}}/pagamento"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "dataPagamento": "2026-10-03",
+      "formaPagamento": "PIX",
+      "valorPago": 400.00
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('situacao vira PARCIAL', () => {
+        pm.expect(pm.response.json().situacao).to.eql('PARCIAL');
+      });
+    language: text/javascript
+order: 5000

@@ -1,0 +1,33 @@
+$kind: http-request
+url: "{{baseUrl}}/contas-pagar"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "numeroTitulo": "DUP-123456",
+      "pessoaId": {{pessoaId}},
+      "tipoTitulo": "DUPLICATA",
+      "valor": 1000.00,
+      "emissao": "2026-09-01",
+      "vencimento": "2026-10-10",
+      "desconto": 50.00,
+      "validadeDesconto": "2026-10-05",
+      "acrescimoDia": 2.00,
+      "rateios": [
+        { "planoContaId": 10, "valor": 600.00 },
+        { "planoContaId": 13, "valor": 400.00 }
+      ]
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('201 Created', () => pm.response.to.have.status(201));
+      pm.collectionVariables.set('contaPagarId', pm.response.json().id);
+      pm.test('situacao inicial ABERTA', () => {
+        pm.expect(pm.response.json().situacao).to.eql('ABERTA');
+      });
+    language: text/javascript
+order: 1000

@@ -1,0 +1,10 @@
+$kind: collection
+description: Colecao de testes da API do Projeto Integrador de Sistemas Distribuidos (IF Goiano - Morrinhos).
+variables:
+  baseUrl: http://localhost:8080/api
+  pessoaId: ""
+  clienteId: ""
+  fornecedorId: ""
+  contaPagarId: ""
+  contaReceberId: ""
+  despesaId: ""

@@ -1,0 +1,23 @@
+$kind: http-request
+url: "{{baseUrl}}/despesas"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "planoContaId": 10,
+      "descricao": "Conta de Luz - dezembro",
+      "valorPrevisto": 150.00,
+      "previsaoPagamento": "2026-12-12"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.collectionVariables.set('despesaId', pm.response.json().id);
+      pm.test('ainda nao realizada', () => {
+        pm.expect(pm.response.json().realizada).to.eql(false);
+      });
+    language: text/javascript
+order: 1000
